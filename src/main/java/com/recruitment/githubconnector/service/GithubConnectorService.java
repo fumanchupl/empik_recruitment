@@ -3,11 +3,14 @@ package com.recruitment.githubconnector.service;
 import com.recruitment.githubconnector.domain.LoginCounter;
 import com.recruitment.githubconnector.domain.response.GitHubResponse;
 import com.recruitment.githubconnector.domain.response.UserDataResponse;
+import com.recruitment.githubconnector.exceptions.ServerErrorException;
+import com.recruitment.githubconnector.exceptions.UserNotFoundException;
 import com.recruitment.githubconnector.repository.LoginCounterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -27,10 +30,14 @@ public class GithubConnectorService {
 		return gitHubClient.get().uri("/users/" + user)
 				//NOTE(Author) media type recommended by GitHub (https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user)
 				.header("Accept", "application/vnd.github+json")
-				.exchangeToMono(response -> response.bodyToMono(GitHubResponse.class))
+				.exchangeToMono(this::processResponse)
 				.doOnNext(body -> log.debug("response body: {}", body))
 				.doOnNext(this::persist)
-				.map(gitHubResponse -> new UserDataResponse(gitHubResponse, calculate(gitHubResponse.followersCount(), gitHubResponse.publicReposCount())));
+				.map(gitHubResponse -> new UserDataResponse(gitHubResponse, calculate(gitHubResponse.followersCount(), gitHubResponse.publicReposCount())))
+				.onErrorMap(ex -> {
+					log.error("Error during user metric retrieval", ex);
+					return new ServerErrorException(ex);
+				});
 	}
 
 	private double calculate(long followersCount, long publicReposCount) {
@@ -39,6 +46,13 @@ public class GithubConnectorService {
 			return 0;
 		}
 		return 6 / (double) followersCount * (2 + publicReposCount);
+	}
+
+	private Mono<GitHubResponse> processResponse(ClientResponse response) {
+		if (response.statusCode().value() == 404) {
+			return Mono.error(new UserNotFoundException());
+		}
+		return response.bodyToMono(GitHubResponse.class);
 	}
 
 	private synchronized LoginCounter persist(GitHubResponse response) {
