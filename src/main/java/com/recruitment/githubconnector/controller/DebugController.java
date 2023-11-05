@@ -1,7 +1,7 @@
 package com.recruitment.githubconnector.controller;
 
 import com.recruitment.githubconnector.domain.LoginCounter;
-import com.recruitment.githubconnector.persistence.LoginCounterRepository;
+import com.recruitment.githubconnector.repository.LoginCounterRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

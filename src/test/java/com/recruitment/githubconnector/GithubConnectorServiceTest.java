@@ -3,7 +3,7 @@ package com.recruitment.githubconnector;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.recruitment.githubconnector.domain.LoginCounter;
 import com.recruitment.githubconnector.domain.response.GitHubResponse;
-import com.recruitment.githubconnector.persistence.LoginCounterRepository;
+import com.recruitment.githubconnector.repository.LoginCounterRepository;
 import com.recruitment.githubconnector.service.GithubClient;
 import com.recruitment.githubconnector.service.GithubConnectorService;
 import org.junit.jupiter.api.BeforeEach;

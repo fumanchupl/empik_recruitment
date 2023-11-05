@@ -3,7 +3,7 @@ package com.recruitment.githubconnector.service;
 import com.recruitment.githubconnector.domain.LoginCounter;
 import com.recruitment.githubconnector.domain.response.GitHubResponse;
 import com.recruitment.githubconnector.domain.response.UserDataResponse;
-import com.recruitment.githubconnector.persistence.LoginCounterRepository;
+import com.recruitment.githubconnector.repository.LoginCounterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
