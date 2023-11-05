@@ -1,4 +1,4 @@
-package com.recruitment.githubconnector.exceptions;
+package com.recruitment.githubconnector.exception;
 
 public class ServerErrorException extends RuntimeException {
 	public ServerErrorException(Throwable ex) {

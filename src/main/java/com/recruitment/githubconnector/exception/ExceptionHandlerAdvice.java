@@ -1,4 +1,4 @@
-package com.recruitment.githubconnector.exceptions;
+package com.recruitment.githubconnector.exception;
 
 import com.recruitment.githubconnector.domain.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
