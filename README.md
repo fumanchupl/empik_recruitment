@@ -9,5 +9,9 @@ After the build, service can be started by running the following command
 
 ## Using the service
 By default, service runs on port `8099`.
+
 To check the user login use `/users/{login}` endpoint.
+
+Additionally there is a debug endpoint `/debug/users` available after starting the service with `dev` profile, which lists all the users along with their req. count.
+
 

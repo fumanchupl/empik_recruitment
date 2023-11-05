@@ -2,10 +2,7 @@ package com.recruitment.githubconnector.controller;
 
 import com.recruitment.githubconnector.domain.response.UserDataResponse;
 import com.recruitment.githubconnector.service.GithubConnectorService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -19,6 +16,7 @@ public class UserController {
 	}
 
 	@GetMapping("/{user}")
+	@ResponseBody
 	public Mono<UserDataResponse> getUserMetrics(@PathVariable("user") String user) {
 		return connectorService.getUserMetrics(user);
 	}
