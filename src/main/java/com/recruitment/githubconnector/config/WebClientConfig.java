@@ -1,5 +1,6 @@
 package com.recruitment.githubconnector.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,8 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
 	@Bean("gitHubClient")
-	public WebClient gitHubClient() {
-		//TODO externalize props
-		return WebClient.builder().baseUrl("https://api.github.com/").build();
+	public WebClient gitHubClient(@Value("${api.github.url}") String url) {
+		return WebClient.builder().baseUrl(url).build();
 	}
 }

@@ -17,10 +17,10 @@ public class ExceptionHandlerAdvice {
 		return new ErrorResponse("User not found", "No user with given login found");
 	}
 
-	@ExceptionHandler(ServerErrorException.class)
+	@ExceptionHandler({ServerErrorException.class, Throwable.class})
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
-	public ErrorResponse unhandled(ServerErrorException ex) {
+	public ErrorResponse unhandled(Throwable ex) {
 		return new ErrorResponse("Server error", "Please contact support");
 	}
 }
