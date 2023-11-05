@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.recruitment</groupId>
 	<artifactId>github-connector</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.9</version>
 	<name>github-connector</name>
 	<description>Recruitment task</description>
 	<properties>
